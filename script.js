@@ -45,10 +45,100 @@ class Table extends React.Component {
                 "K♣",
                 "A♣"
             ],
-            shuffled_deck: []
+            shuffled_deck: [],
+            player_turn: 1
         };
     }
-    handleClick(i) { }
+    possible_turn(i, p) {
+        const deck = this.state.shuffled_deck.slice();
+        const player_hand = this.state.shuffled_deck.slice();
+        if (p == 1) {
+            player_hand.slice(0, 10);
+        }
+        if (p == 2) {
+            player_hand.slice(10, 20);
+        }
+        if (p == 3) {
+            player_hand.slice(20, 30);
+        }
+        if (deck[32] != "") {
+            if (deck[32].includes("♦")) {
+                if (deck[i].includes("♦")) {
+                    return true;
+                }
+                else if (player_hand.includes("♦") == false) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            if (deck[32].includes("♥")) {
+                if (deck[i].includes("♥")) {
+                    return true;
+                }
+                else if (player_hand.includes("♥") == false) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            if (deck[32].includes("♠")) {
+                if (deck[i].includes("♠")) {
+                    return true;
+                }
+                else if (player_hand.includes("♠") == false) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            if (deck[32].includes("♣")) {
+                if (deck[i].includes("♣")) {
+                    return true;
+                }
+                else if (player_hand.includes("♣") == false) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        }
+        else {
+            return true;
+        }
+    }
+    handleClick(i, p) {
+        const deck = this.state.shuffled_deck.slice();
+        if (((p == 1 && i < 10) ||
+            (p == 2 && 9 < i && i < 20) ||
+            (p == 3 && 19 < i && i < 30)) &&
+            this.possible_turn(i, p)) {
+            if (deck[32] == "" || deck[32] == null) {
+                deck[32] = deck[i];
+            }
+            else if (deck[33] == "" || deck[33] == null) {
+                deck[33] = deck[i];
+            }
+            else if (deck[34] == "" || deck[34] == null) {
+                deck[34] == deck[i];
+                deck[32] = "";
+                deck[33] = "";
+                deck[34] = "";
+            }
+            deck[i] = "";
+            if (p == 3) {
+                p = 1;
+            }
+            else {
+                p = p + 1;
+            }
+            this.setState({ shuffled_deck: deck, player_turn: p });
+        }
+    }
     handleClickShuffle() {
         const deck = this.state.deck.slice();
         const shuffled_deck = [];
@@ -57,13 +147,14 @@ class Table extends React.Component {
             shuffled_deck.push(deck[r]);
             deck.splice(r, 1);
         }
+        shuffled_deck.push("");
         this.setState({ shuffled_deck: shuffled_deck });
     }
     renderButton() {
         return React.createElement("button", { onClick: () => this.handleClickShuffle() }, "Shuffle");
     }
     renderCard(i) {
-        return (React.createElement(Card, { value: this.state.shuffled_deck[i], onClick: () => this.handleClick(i) }));
+        return (React.createElement(Card, { value: this.state.shuffled_deck[i], onClick: () => this.handleClick(i, this.state.player_turn) }));
     }
     render() {
         return (React.createElement("div", null,
