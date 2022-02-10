@@ -54,45 +54,45 @@ class Table extends React.Component {
         
         if (p == 1) {
             var player_hand = deck.slice(0, 10);
-            //console.log(player_hand);
-            //console.log("p1");
+            console.log(player_hand);
+            console.log("p1");
         }
         if (p == 2) {
             var player_hand = deck.slice(10, 20);
-            //console.log(player_hand);
-            //console.log("p2");
+            console.log(player_hand);
+            console.log("p2");
         }
         if (p == 3) {
             var player_hand = deck.slice(20, 30);
-            //console.log(player_hand);
-            //console.log("p3");
+            console.log(player_hand);
+            console.log("p3");
         }
         if (deck[32] != "") {
             if (deck[32].includes("♦")) {
-                //console.log("♦");
-                //console.log(player_hand.filter(s => s.includes("♦")).length == 0);
+                console.log("♦");
+                console.log(player_hand.filter(s => s.includes("♦")).length == 0);
                 if (deck[i].includes("♦")) {
-                    //console.log("True");
+                    console.log("True");
                     return true;
 
                 }
                 else if (player_hand.filter(s => s.includes("♦")).length == 0) {
-                    //console.log("True");
+                    console.log("True");
                     return true;
                 }
                 else {
-                    //console.log("False");
+                    console.log("False");
                     return false;
                 }
             }
             if (deck[32].includes("♥")) {
-                //console.log("♥");
-                //console.log(player_hand.filter(s => s.includes("♥")).length == 0);
+                console.log("♥");
+                console.log(player_hand.filter(s => s.includes("♥")).length == 0);
                 if (deck[i].includes("♥")) {
                     return true;
                 }
                 else if (player_hand.filter(s => s.includes("♥")).length == 0) {
-                    //console.log("true");
+                    console.log("true");
                     return true;
                 }
                 else {
@@ -100,13 +100,13 @@ class Table extends React.Component {
                 }
             }
             if (deck[32].includes("♠")) {
-                //console.log("♠");
-                //console.log(player_hand.filter(s => s.includes("♥")).length == 0);
+                console.log("♠");
+                console.log(player_hand.filter(s => s.includes("♠")).length == 0);
                 if (deck[i].includes("♠")) {
                     return true;
                 }
-                else if (player_hand.filter(s => s.includes("♥")).length == 0) {
-                    //console.log("true");
+                else if (player_hand.filter(s => s.includes("♠")).length == 0) {
+                    console.log("true");
                     return true;
                 }
                 else {
@@ -114,13 +114,13 @@ class Table extends React.Component {
                 }
             }
             if (deck[32].includes("♣")) {
-                //console.log("♣");
-                //console.log(player_hand.filter(s => s.includes("♣")).length == 0);
+                console.log("♣");
+                console.log(player_hand.filter(s => s.includes("♣")).length == 0);
                 if (deck[i].includes("♣")) {
                     return true;
                 }
-                else if (player_hand.filter(s => s.includes("♥")).length == 0) {
-                    //console.log("true");
+                else if (player_hand.filter(s => s.includes("♣")).length == 0) {
+                    console.log("true");
                     return true;
                 }
                 else {
