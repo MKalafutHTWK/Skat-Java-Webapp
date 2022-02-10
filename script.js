@@ -51,33 +51,48 @@ class Table extends React.Component {
     }
     possible_turn(i, p) {
         const deck = this.state.shuffled_deck.slice();
-        const player_hand = this.state.shuffled_deck.slice();
+        
         if (p == 1) {
-            player_hand.slice(0, 10);
+            var player_hand = deck.slice(0, 10);
+            //console.log(player_hand);
+            //console.log("p1");
         }
         if (p == 2) {
-            player_hand.slice(10, 20);
+            var player_hand = deck.slice(10, 20);
+            //console.log(player_hand);
+            //console.log("p2");
         }
         if (p == 3) {
-            player_hand.slice(20, 30);
+            var player_hand = deck.slice(20, 30);
+            //console.log(player_hand);
+            //console.log("p3");
         }
         if (deck[32] != "") {
             if (deck[32].includes("♦")) {
+                //console.log("♦");
+                //console.log(player_hand.filter(s => s.includes("♦")).length == 0);
                 if (deck[i].includes("♦")) {
+                    //console.log("True");
                     return true;
+
                 }
-                else if (player_hand.includes("♦") == false) {
+                else if (player_hand.filter(s => s.includes("♦")).length == 0) {
+                    //console.log("True");
                     return true;
                 }
                 else {
+                    //console.log("False");
                     return false;
                 }
             }
             if (deck[32].includes("♥")) {
+                //console.log("♥");
+                //console.log(player_hand.filter(s => s.includes("♥")).length == 0);
                 if (deck[i].includes("♥")) {
                     return true;
                 }
-                else if (player_hand.includes("♥") == false) {
+                else if (player_hand.filter(s => s.includes("♥")).length == 0) {
+                    //console.log("true");
                     return true;
                 }
                 else {
@@ -85,10 +100,13 @@ class Table extends React.Component {
                 }
             }
             if (deck[32].includes("♠")) {
+                //console.log("♠");
+                //console.log(player_hand.filter(s => s.includes("♥")).length == 0);
                 if (deck[i].includes("♠")) {
                     return true;
                 }
-                else if (player_hand.includes("♠") == false) {
+                else if (player_hand.filter(s => s.includes("♥")).length == 0) {
+                    //console.log("true");
                     return true;
                 }
                 else {
@@ -96,10 +114,13 @@ class Table extends React.Component {
                 }
             }
             if (deck[32].includes("♣")) {
+                //console.log("♣");
+                //console.log(player_hand.filter(s => s.includes("♣")).length == 0);
                 if (deck[i].includes("♣")) {
                     return true;
                 }
-                else if (player_hand.includes("♣") == false) {
+                else if (player_hand.filter(s => s.includes("♥")).length == 0) {
+                    //console.log("true");
                     return true;
                 }
                 else {
@@ -111,12 +132,25 @@ class Table extends React.Component {
             return true;
         }
     }
+    turn_win(p){
+        const deck = this.state.shuffled_deck.slice();
+        var card1 = deck[32];
+        var card2 = deck[33];
+        var card3 = deck[34];
+        angespielt = deck[32].slice(deck[32].length-1);
+        if(deck[33].includes(angespielt)){
+
+        }
+        
+        return next_player
+    }
     handleClick(i, p) {
         const deck = this.state.shuffled_deck.slice();
         if (((p == 1 && i < 10) ||
             (p == 2 && 9 < i && i < 20) ||
             (p == 3 && 19 < i && i < 30)) &&
             this.possible_turn(i, p)) {
+            
             if (deck[32] == "" || deck[32] == null) {
                 deck[32] = deck[i];
             }
@@ -125,6 +159,7 @@ class Table extends React.Component {
             }
             else if (deck[34] == "" || deck[34] == null) {
                 deck[34] == deck[i];
+                //this.turn_win(p);
                 deck[32] = "";
                 deck[33] = "";
                 deck[34] = "";
