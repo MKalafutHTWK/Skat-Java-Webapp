@@ -49,7 +49,7 @@ class Table extends React.Component {
             player_turn: 1
         };
     }
-    possible_turn(i, p) {
+    possible_turn(i, p, t) {
         const deck = this.state.shuffled_deck.slice();
         
         if (p == 1) {
@@ -133,19 +133,50 @@ class Table extends React.Component {
         }
     }
     turn_win(p){
-        const deck = this.state.shuffled_deck.slice();
+        var deck = this.state.shuffled_deck.slice();
+        deck.forEach((x, i) => deck[i] = x.replace('10', '12'));
+        deck.forEach((x, i) => deck[i] = x.replace('O', '10'));
+        deck.forEach((x, i) => deck[i] = x.replace('K', '11'));
+        deck.forEach((x, i) => deck[i] = x.replace('A', '13'));
+        deck.forEach((x, i) => deck[i] = x.replace('U', '14'));
+        console.log(deck);
         var card1 = deck[32];
         var card2 = deck[33];
         var card3 = deck[34];
-        angespielt = deck[32].slice(deck[32].length-1);
+        var angespielt = deck[32].slice(deck[32].length-1);
+        var gewertet = [];
+        var next_player;
+        gewertet.push(deck[32].slice(0,deck[32].length-1));
+        console.log(gewertet);
+        console.log(angespielt);
         if(deck[33].includes(angespielt)){
-
+            gewertet.push(deck[33].slice(0,deck[33].length-1));
+            console.log(gewertet);
         }
-        
+        else{
+            gewertet.push("");
+        }
+        console.log(deck[34]);
+        if(card3.includes(angespielt)){
+            gewertet.push(deck[34].slice(0,deck[34].length-1));
+            console.log(gewertet);
+        }
+        console.log(Math.max(...gewertet));
+        next_player =  p + 1 + gewertet.indexOf(Math.max(...gewertet).toString()) ;//2+2 = 1 3+2=2 3+1 = 1
+        if (next_player == 4)
+            next_player = 1;
+        if (next_player == 5)
+            next_player = 2;
+        console.log(next_player);
+        document.getElementById('player1').style.color = 'black';
+        document.getElementById('player2').style.color = 'black';
+        document.getElementById('player3').style.color = 'black';
+        document.getElementById('player' + next_player).style.color = 'red';
         return next_player
     }
     handleClick(i, p) {
         const deck = this.state.shuffled_deck.slice();
+        var next_player = 0;
         if (((p == 1 && i < 10) ||
             (p == 2 && 9 < i && i < 20) ||
             (p == 3 && 19 < i && i < 30)) &&
@@ -158,18 +189,25 @@ class Table extends React.Component {
                 deck[33] = deck[i];
             }
             else if (deck[34] == "" || deck[34] == null) {
-                deck[34] == deck[i];
-                //this.turn_win(p);
-                deck[32] = "";
+                deck[34] = deck[i];
+                console.log(deck[34])
+                this.state.shuffled_deck = deck;
+                next_player = this.turn_win(p);
+                deck[32] = "";  
                 deck[33] = "";
                 deck[34] = "";
             }
             deck[i] = "";
+            
             if (p == 3) {
                 p = 1;
             }
             else {
                 p = p + 1;
+            }
+            if(next_player > 0){
+                p = next_player;
+
             }
             this.setState({ shuffled_deck: deck, player_turn: p });
         }
@@ -194,7 +232,7 @@ class Table extends React.Component {
     render() {
         return (React.createElement("div", null,
             React.createElement("div", null, this.renderButton()),
-            React.createElement("div", { className: "table" },
+            React.createElement("div" , { className: "table" },
                 "Table",
                 this.renderCard(32),
                 this.renderCard(33),
@@ -203,8 +241,10 @@ class Table extends React.Component {
                 "Skat",
                 this.renderCard(30),
                 this.renderCard(31)),
+
+            React.createElement("div", { id: "player1" },
+                "Player1"),
             React.createElement("div", { className: "player" },
-                "Player1",
                 this.renderCard(0),
                 this.renderCard(1),
                 this.renderCard(2),
@@ -215,8 +255,9 @@ class Table extends React.Component {
                 this.renderCard(7),
                 this.renderCard(8),
                 this.renderCard(9)),
+            React.createElement("div", { id: "player2" },
+                "Player2"),
             React.createElement("div", { className: "player" },
-                "Player2",
                 this.renderCard(10),
                 this.renderCard(11),
                 this.renderCard(12),
@@ -227,8 +268,9 @@ class Table extends React.Component {
                 this.renderCard(17),
                 this.renderCard(18),
                 this.renderCard(19)),
+                React.createElement("div", { id: "player3" },
+                "Player3"),
             React.createElement("div", { className: "player" },
-                "Player3",
                 this.renderCard(20),
                 this.renderCard(21),
                 this.renderCard(22),
